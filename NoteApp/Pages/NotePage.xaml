@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NoteApp.Pages.NotePage">
+
+    <ContentPage.Resources>
+        <Color x:Key="Primary">#002375</Color>
+        <Color x:Key="Secondary">#ff9f66</Color>
+        <Color x:Key="Tertiary">#fffae6</Color>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Background="{StaticResource Tertiary}"
+            Padding="20,20" Spacing="5">
+
+            <HorizontalStackLayout Spacing="15">
+
+                <ImageButton Source="backarrow.png"
+                    HeightRequest="20"
+                    WidthRequest="20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Clicked="OnBackButtonClicked"/>
+            
+                <Entry x:Name="title"
+                    Placeholder="Untitle Note" 
+                    FontSize="25"
+                    MaxLength="20"
+                    TextChanged="OnTitleChanged"/>
+            
+            </HorizontalStackLayout>
+
+            <Editor x:Name="description"
+                Placeholder="Start typing here..."
+                FontSize="15"
+                HeightRequest="2000"
+                AutoSize="TextChanges"
+                TextChanged="OnDescriptionChanged"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
