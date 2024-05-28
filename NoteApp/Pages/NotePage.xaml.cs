@@ -43,6 +43,6 @@ public partial class NotePage : ContentPage
 
     private async void OnBackButtonClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//main");
+        await Shell.Current.GoToAsync("//main", true);
     }
 }

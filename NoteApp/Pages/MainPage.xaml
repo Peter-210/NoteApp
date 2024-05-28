@@ -4,11 +4,11 @@
              x:Class="NoteApp.Pages.MainPage"
              xmlns:controls="clr-namespace:NoteApp.Controls">
 
-        <Grid>
-            <ScrollView>
-                <controls:NoteList/>
-            </ScrollView>
-            <controls:NewNoteButton/>
-        </Grid>
+    <Grid>
+        <ScrollView>
+            <controls:NoteList/>
+        </ScrollView>
+        <controls:NewNoteButton/>
+    </Grid>
 
 </ContentPage>

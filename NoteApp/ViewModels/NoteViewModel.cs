@@ -1,98 +1,57 @@
-using NoteApp.Models;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using NoteApp.Models;
 
 namespace NoteApp.ViewModels;
 
-public class NoteViewModel : ViewModelBase
-{ 
-    private List<NoteModel> noteCollection;
-    public List<NoteModel> NoteCollection
+public class NoteViewModel : INotifyPropertyChanged
+{
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private ObservableCollection<NoteModel>? _noteCollection;
+    public ObservableCollection<NoteModel>? NoteCollection
     {
-        get => noteCollection;
+        get => _noteCollection;
         set
         {
-            if (noteCollection != value)
+            if (_noteCollection != value)
             {
-                noteCollection = value;
-                OnPropertyChanged(nameof(noteCollection));
+                _noteCollection = value;
+                OnPropertyChanged();
             }
         }
     }
 
-    //public ICommand AddNote { private set; get; }
-    //public ICommand EditNote { private set; get; }
-    //public ICommand DeleteNote { private set; get; }
+    public ICommand AddNoteCommand => new Command(AddNote);
+
+    private void AddNote()
+    {
+        NoteCollection?.Add(new NoteModel
+        {
+            title = "Test",
+            description = "Work",
+            date = DateTime.Now
+        });
+    }
 
     public NoteViewModel()
     {
-        noteCollection = new List<NoteModel>();
         initNoteList();
-
-        /*AddNote = new Command<string>(
-            execute: (string args) =>
-            {
-                noteCollection.Add(new NoteModel
-                {
-                    title = "Test",
-                    description = "Work",
-                    date = DateTime.Now
-                });
-            },
-            canExecute: (string args) =>
-            {
-                return true;
-            }
-        );*/
-
-        /*EditNote = new Command<DateTime>(
-            execute: (DateTime time) =>
-            {
-                noteCollection.Add(new NoteModel
-                {
-                    title = "Test",
-                    description = "Work",
-                    date = DateTime.Now
-                });
-            },
-            canExecute: (DateTime time) =>
-            {
-                // If the note id exists
-                return true;
-            }
-        );*/
-
-        /*DeleteNote = new Command<DateTime>(
-            execute: (DateTime time) =>
-            {
-                noteCollection.Add(new NoteModel
-                {
-                    title = "Test",
-                    description = "Work",
-                    date = DateTime.Now
-                });
-            },
-            canExecute: (DateTime time) =>
-            {
-                // If the note id exists
-                return true;
-            }
-        );*/
     }
 
     private void initNoteList() 
     {
-        AddNoteEvent("My Title", "Lorem ipon", new DateTime(2021, 1, 1));
-        AddNoteEvent("My Title", "Lorem ipon", new DateTime(2022, 2, 2));
-        AddNoteEvent("My Title", "Lorem ipon", new DateTime(2023, 3, 3));
+        NoteCollection = new ObservableCollection<NoteModel>();
+
+        //AddNoteEvent("My Title", "Lorem ipon", new DateTime(2021, 1, 1));
+        //AddNoteEvent("My Title", "Lorem ipon", new DateTime(2022, 2, 2));
+        //AddNoteEvent("My Title", "Lorem ipon", new DateTime(2023, 3, 3));
     }
 
-    private void AddNoteEvent(string _title, string _description, DateTime _date) 
+    public void OnPropertyChanged([CallerMemberName] string name = "")
     {
-        noteCollection.Add(new NoteModel
-        {
-            title = _title,
-            description = _description,
-            date = _date
-        });
-    }
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }       
 }

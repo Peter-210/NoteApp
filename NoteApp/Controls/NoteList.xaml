@@ -18,6 +18,20 @@
     <VerticalStackLayout Padding="30,30" Spacing="15"
         Background="{StaticResource Tertiary}">
 
+
+
+        <Entry Placeholder="Title"/>
+        <Entry Placeholder="Note"/>
+        <Button Text="Add Note" Command="{Binding AddNoteCommand}"/>
+
+
+
+
+
+
+
+
+
         <CollectionView ItemsSource="{Binding NoteCollection}">
             
             <CollectionView.ItemsLayout>
@@ -62,12 +76,13 @@
             
             <CollectionView.EmptyView>
                 <ContentView>
-                    <StackLayout HorizontalOptions="CenterAndExpand" 
-                        VerticalOptions="CenterAndExpand">
+                    <Grid>
 
-                        <Label Text="No Notes"/>
+                        <Label Text="No Notes"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
 
-                    </StackLayout>
+                    </Grid>
                 </ContentView>
             </CollectionView.EmptyView>
             
