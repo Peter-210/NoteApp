@@ -6,10 +6,18 @@ using NoteApp.Models;
 
 namespace NoteApp.ViewModels;
 
-public class NoteViewModel : INotifyPropertyChanged
+public class ViewModelBase : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
+    protected virtual void OnPropertyChanged([CallerMemberName] string name = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+}
+
+public class NoteViewModel : ViewModelBase
+{
     private ObservableCollection<NoteModel>? _noteCollection;
     public ObservableCollection<NoteModel>? NoteCollection
     {
@@ -48,10 +56,5 @@ public class NoteViewModel : INotifyPropertyChanged
         //AddNoteEvent("My Title", "Lorem ipon", new DateTime(2021, 1, 1));
         //AddNoteEvent("My Title", "Lorem ipon", new DateTime(2022, 2, 2));
         //AddNoteEvent("My Title", "Lorem ipon", new DateTime(2023, 3, 3));
-    }
-
-    public void OnPropertyChanged([CallerMemberName] string name = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-    }       
+    }  
 }
