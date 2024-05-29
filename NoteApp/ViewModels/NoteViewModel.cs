@@ -33,19 +33,6 @@ public class NoteViewModel : ViewModelBase
         }
     }
 
-    public ICommand AddNoteCommand => new Command(() => {
-        var _id = Guid.NewGuid();
-        var note = new NoteModel
-        {
-            title = null,
-            description = null,
-            date = DateTime.Now,
-            id = _id
-        };
-
-        saveNote(note, _id);
-    });
-
     public NoteViewModel()
     {
         initNoteList();
@@ -63,6 +50,19 @@ public class NoteViewModel : ViewModelBase
             return note;
     }
 
+    public ICommand AddNoteCommand => new Command(() => {
+        var _id = Guid.NewGuid();
+        var note = new NoteModel
+        {
+            title = null,
+            description = null,
+            date = DateTime.Now,
+            id = _id
+        };
+
+        SaveNote(note, _id);
+    });
+
     public void EditNote(Guid _id, string _title, string _description)
     {
         NoteModel note = loadNoteFromFile(_id);
@@ -72,12 +72,11 @@ public class NoteViewModel : ViewModelBase
         note.date = DateTime.Now;
 
         DeleteNote(_id);
-        saveNote(note, _id);
+        SaveNote(note, _id);
     }
 
     public ICommand DeleteNoteCommand => new Command<Guid>(DeleteNote);
-
-    public void DeleteNote(Guid _id)
+    private void DeleteNote(Guid _id)
     {
         try 
         {
@@ -124,12 +123,10 @@ public class NoteViewModel : ViewModelBase
         }
     }
 
-    private void saveNote(NoteModel note, Guid noteID)
+    private void SaveNote(NoteModel note, Guid noteID)
     {
         string json = JsonSerializer.Serialize(note);
         string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), noteID.ToString() + "_note.json");
-
-        Console.WriteLine(filePath);
 
         File.WriteAllText(filePath, json);
         NoteCollection?.Add(note);
@@ -137,9 +134,11 @@ public class NoteViewModel : ViewModelBase
 
     private NoteModel loadNoteFromFile(Guid noteID)
     {
-        string filePath = noteID.ToString() + "_note.json";
-        string json = File.ReadAllText(filePath);
+        string directoryPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        string fileName = noteID.ToString() + "_note.json";
+        string filePath = Path.Combine(directoryPath, fileName);
 
+        string json = File.ReadAllText(filePath);
         return JsonSerializer.Deserialize<NoteModel>(json);
     }
 }

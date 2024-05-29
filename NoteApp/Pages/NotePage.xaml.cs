@@ -64,10 +64,10 @@ public partial class NotePage : ContentPage
 
     private async void OnBackButtonClicked(object sender, EventArgs e)
     {
-        //if (titleString != note.title || descriptionString != note.description)
-        //{ 
-        
-        //}
+        if (titleString != note.title || descriptionString != note.description)
+        {
+            Notes.EditNote(ID, titleString, descriptionString);
+        }
 
         await Shell.Current.GoToAsync("//main", true);
     }
