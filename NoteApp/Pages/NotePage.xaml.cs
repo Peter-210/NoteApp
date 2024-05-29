@@ -1,20 +1,24 @@
+using NoteApp.Models;
 using NoteApp.ViewModels;
 
 namespace NoteApp.Pages;
 
-[QueryProperty(nameof(Date), "date")]
+[QueryProperty(nameof(ID), "id")]
 public partial class NotePage : ContentPage
-{ 
+{
+    NoteViewModel Notes;
+    private NoteModel note;
+
     private string? titleString;
     private string? descriptionString;
 
-    private DateTime _dateData;
-    public DateTime Date
+    private Guid _id;
+    public Guid ID
     {
-        get => _dateData;
+        get => _id;
         set
         {
-            _dateData = value;
+            _id = value;
             OnPropertyChanged();
         }
     }
@@ -26,9 +30,26 @@ public partial class NotePage : ContentPage
 
     protected override void OnAppearing()
     {
+        // Reset values
         title.Text = null;
         description.Text = null;
+
         base.OnAppearing();
+
+        Notes = new NoteViewModel();
+        note = Notes.GetNote(ID);
+
+        if (note == null) 
+        {
+            Console.WriteLine("ERROR: note is null for edit page.");
+            return;
+        }
+
+        if (note.title != null)
+            title.Text = note.title;
+
+        if (note.description != null)
+            description.Text = note.description;
     }
 
     private void OnTitleChanged(object sender, TextChangedEventArgs e)
@@ -43,6 +64,11 @@ public partial class NotePage : ContentPage
 
     private async void OnBackButtonClicked(object sender, EventArgs e)
     {
+        //if (titleString != note.title || descriptionString != note.description)
+        //{ 
+        
+        //}
+
         await Shell.Current.GoToAsync("//main", true);
     }
 }

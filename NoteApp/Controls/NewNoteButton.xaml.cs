@@ -1,3 +1,5 @@
+using NoteApp.ViewModels;
+
 namespace NoteApp.Controls;
 
 public partial class NewNoteButton : ContentView
@@ -6,9 +8,4 @@ public partial class NewNoteButton : ContentView
 	{
 		InitializeComponent();
 	}
-
-	private async void OnNewButtonClicked(object sender, EventArgs e)
-	{
-        await Shell.Current.GoToAsync("//note", true);
-    }
 }

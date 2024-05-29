@@ -12,21 +12,7 @@
     <VerticalStackLayout Padding="30,30" Spacing="15"
         Background="{StaticResource Tertiary}">
 
-
-
-        <Entry Placeholder="Title"/>
-        <Entry Placeholder="Note"/>
-        <Button Text="Add Note" Command="{Binding AddNoteCommand}"/>
-
-
-
-
-
-
-
-
-
-        <CollectionView ItemsSource="{Binding NoteCollection}">
+        <CollectionView x:Name="noteCollectionView" ItemsSource="{Binding NoteCollection}">
             
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="20"
@@ -38,14 +24,17 @@
                     <SwipeView>
                         <SwipeView.LeftItems>
                             <SwipeItems>
-                                <SwipeItem Text="Delete"></SwipeItem>
+                                <SwipeItem Text="Delete" 
+                                    Command="{Binding Path=BindingContext.DeleteNoteCommand, 
+                                        Source={x:Reference Name=noteCollectionView}}"
+                                        CommandParameter="{Binding id}"/>
                             </SwipeItems>
                         </SwipeView.LeftItems>
                         
                         <Grid>
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnEditNoteClicked"
-                                    CommandParameter="{Binding date}"/>
+                                    CommandParameter="{Binding id}"/>
                             </Grid.GestureRecognizers>
 
                             <Border Background="{StaticResource Secondary}"

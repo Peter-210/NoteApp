@@ -11,7 +11,6 @@
         Margin="40, 40"
         HorizontalOptions="End"
         VerticalOptions="End"
-        Clicked="OnNewButtonClicked"
         Command="{Binding AddNoteCommand}"/>
 
 </ContentView>
