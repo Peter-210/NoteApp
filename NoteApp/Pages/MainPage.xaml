@@ -2,19 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NoteApp.Pages.MainPage"
-             xmlns:controls="clr-namespace:NoteApp.Controls"
-             xmlns:viewmodels="clr-namespace:NoteApp.ViewModels">
-
-    <ContentPage.BindingContext>
-        <viewmodels:NoteViewModel x:Name="noteViewModel"/>
-    </ContentPage.BindingContext>
+             xmlns:controls="clr-namespace:NoteApp.Controls">
 
     <Grid>
         <ScrollView>
-            <controls:NoteList BindingContext="{Binding Source={x:Reference noteViewModel}}"/>
+            <controls:NoteList x:Name="noteList"/>
         </ScrollView>
 
-        <controls:NewNoteButton BindingContext="{Binding Source={x:Reference noteViewModel}}"/>
+        <controls:NewNoteButton x:Name="newNoteButton"/>
     </Grid>
 
 </ContentPage>
