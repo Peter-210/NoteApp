@@ -71,7 +71,7 @@ public class NoteViewModel : ViewModelBase
         note.description = _description;
         note.date = DateTime.Now;
 
-        //DeleteNote(_id);
+        DeleteNote(_id);
         saveNote(note, _id);
     }
 
